@@ -22,9 +22,16 @@ do {
     fail("Не удалось прочитать файл «\(path)»: \(error.localizedDescription)")
 }
 
+let document: ConfigDocument
+
 do {
-    _ = try ConfigParser().parse(source)
-    print("Синтаксис корректен.")
+    document = try ConfigParser().parse(source)
 } catch {
     fail("Синтаксическая ошибка в файле «\(path)»:\n\(error)")
+}
+
+do {
+    print(try ConfigTranslator().translate(document))
+} catch {
+    fail("Ошибка трансляции в файле «\(path)»: \(error.localizedDescription)")
 }
