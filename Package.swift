@@ -2,11 +2,20 @@
 import PackageDescription
 
 let package = Package(
-    name: "ConfigTranslator",
-    products: [
-        .executable(name: "config-translator", targets: ["ConfigTranslator"])
+    name: "config-translator",
+    dependencies: [
+        .package(
+            url: "https://github.com/pointfreeco/swift-parsing.git",
+            exact: "0.15.0"
+        )
     ],
     targets: [
-        .executableTarget(name: "ConfigTranslator", path: "src")
+        .executableTarget(
+            name: "config-translator",
+            dependencies: [
+                .product(name: "Parsing", package: "swift-parsing")
+            ],
+            path: "src"
+        )
     ]
 )
